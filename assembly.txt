@@ -1,0 +1,78 @@
+;//////////
+; Higher Level Code
+;	int n;
+;	cin >> n;
+;	int arr1[n];
+;	int arr2[n];
+;	for(int i = 0; i < n; ++i){
+;		cin >> arr1[i];
+;	}
+;	for(int i = 0; i < n; ++i){
+;		cin >> arr2[i];
+;	}
+;	int cnt = 0;
+;	for(int i = 0; i < n; ++i){
+;		if(arr1[i] == arr2[i]){
+;		cnt ++;
+;		}
+;	}
+;	cout << cnt << endl;
+
+; Assembly code according to our designed ISA
+
+AND ZERO, ZERO, R1
+AND ZERO, ZERO, R5
+AND ZERO, ZERO, R6
+; Initials**************
+INPT R7
+ADD R6, R7, R6
+ADDi R6, R6, 5
+; loop 1 **************
+#LOOP1
+COMP R1, R7, R2
+NEQL R2, ZERO, #LOOP1_OK
+JUMP #BREAK_LOOP_1
+#LOOP1_OK
+INPT R2
+ADD R1, R5, R3
+STOR R3, R2, 0
+ADDi R1, R1, 1
+JUMP #LOOP1
+#BREAK_LOOP_1
+; loop 1  ends ************** 
+OUT ZERO
+;
+AND ZERO, ZERO, R1
+#LOOP2
+COMP R1, R7, R2
+NEQL R2, ZERO, #LOOP2_OK
+JUMP #BREAK_LOOP_2
+#LOOP2_OK
+INPT R2
+ADD R1, R6, R3
+STOR R3, R2, 0
+ADDi R1, R1, 1
+JUMP #LOOP2
+#BREAK_LOOP_2
+AND ZERO, ZERO, R4
+AND ZERO, ZERO, R1
+;
+OUT ZERO
+; loop 3 starts ************
+#LOOP3
+COMP R1, R7, R2
+NEQL R2, ZERO, #LOOP3_OK
+JUMP #BREAK_LOOP_3
+#LOOP3_OK
+ADD R1, R5, R2
+LOAD R2, R2, 0
+ADD R1, R6, R3
+LOAD R3, R3, 0
+NEQL R2, R3, #SKIP
+ADDi R4, R4, 1
+#SKIP
+ADDi R1, R1, 1
+JUMP #LOOP3
+#BREAK_LOOP_3
+; Loop 3 ends
+OUT R4
