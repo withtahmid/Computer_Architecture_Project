@@ -8,7 +8,7 @@
 */
 // this is not the most effircient way to make this
 #include<bits/stdc++.h>
-#include<debug.h>
+// #include<debug.h>
 using namespace std;
 int bit = 3;
 int opcode_size = 5;
@@ -71,7 +71,7 @@ void print_instruction(instruction);
 bool complete_instruction(instruction&);
 int main(){	
 
-	io();
+	// io();
 	if(not go_through_input_file()){
 		return 0;
 	}
